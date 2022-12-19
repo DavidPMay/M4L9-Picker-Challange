@@ -5,27 +5,23 @@
 //  Created by David May on 12/8/22.
 //
 
+//    Build an app that lets users order a meal from your new restaurant, “Ottimo Ristorante”! The UI should have
+
+
 import SwiftUI
 
 struct ContentView: View {
-//    Build an app that lets users order a meal from your new restaurant, “Ottimo Ristorante”! The UI should have
-//
 
-
-
-//    For an extra challenge, try using SwiftUI’s DatePicker view instead!
-   
     @State  var locationIndex = 4
     @State var menuIndex = 4
     @State var pickupIndex = 6
-    
+    @State var date = Date()
     
     var body: some View {
      
         VStack (alignment: .center, spacing: 0) {
             
             Text("Ottimo Ristorante")
-                
                 
                 .font(.largeTitle)
                 .bold()
@@ -55,12 +51,10 @@ struct ContentView: View {
                 }
             }
             
-            
             Spacer()
   
             //    A wheel picker that lets the user choose what they want to eat
 
-            
             Picker("Menu Item", selection: $menuIndex) {
                 
                 Text("Spaghetti").tag(1)
@@ -72,10 +66,6 @@ struct ContentView: View {
                 Text("Riggotoni").tag(7)
                 Text("Linguini").tag(8)
                 Text("Sausage Ziti").tag(9)
-                
-                
-                
-                
                 }
                 .pickerStyle(WheelPickerStyle())
                 .padding(.bottom, 10)
@@ -83,6 +73,17 @@ struct ContentView: View {
               
             Spacer()
             
+            //    For an extra challenge, try using SwiftUI’s DatePicker view instead!
+            
+            
+            DatePicker(
+                    "PickUp Date:",
+                    selection: $date,
+                    displayedComponents: [.date]
+                )
+            .padding(.horizontal, 60)
+            .padding(.bottom, 40)
+          
             //    A segmented picker that lets the user select what time they will pick up their order
             
             Picker("PickUp Time", selection: $pickupIndex) {
@@ -101,13 +102,13 @@ struct ContentView: View {
             //    A button that says “Pick for me!”. When the button is tapped, the app should randomly select a location, meal and time for the user
             
             Button("Pick for me!") {
+                
+                date = Date.now.addingTimeInterval(TimeInterval(86400 * (Int.random(in: 1...14))))
                 locationIndex = Int.random(in: 1...9)
                 menuIndex = Int.random(in: 1...9)
                 pickupIndex = Int.random(in: 5...9)
-            }
-            
+            }            
         }
-        
     }
 }
 
